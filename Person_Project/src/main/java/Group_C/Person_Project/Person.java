@@ -144,16 +144,4 @@ public class Person {
         }
         return false;    
      }
-
-    public static void main(String[] args) {
-        try{
-	        Person person = new Person("John", "Doe", "07/10/1990", "European",
-	                "Computer Science", "Advanced", "123456789", "john@example.com");
-	
-	        System.out.println("Is legal age? " + person.isLegalAge());
-	        System.out.println("Is European? " + person.isEuropean());
-        }catch(NullPointerException e) {
-        	System.out.println(e.getMessage());
-        }
-    }
 }

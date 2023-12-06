@@ -38,8 +38,10 @@ public class Presentation {
         print("English Certification: " + person.getEnglishCertification());
         print("Phone Number: " + person.getPhoneNumber());
         print("Email: " + person.getEmail());
-        person.isEuropean();
-        person.isLegalAge();
+        boolean European = person.isEuropean();
+        print("Is european: " + European);
+        boolean legalAge = person.isLegalAge();
+        print("Is legal age: " + legalAge);
         }catch (IllegalArgumentException e) {
             System.out.println("Invalid input: " + e.getMessage());
         } catch (Exception e) {
