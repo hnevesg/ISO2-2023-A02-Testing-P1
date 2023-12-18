@@ -1,11 +1,14 @@
 package Group_C.Person_Project;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Person {
     private String name;
     private String lastName;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String nationality;
     private String education;
     private String englishCertification;
@@ -19,8 +22,7 @@ public class Person {
         ROMANIAN, SLOVAK, SLOVENIAN, SPANISH, SWEDISH
     }
     
-    public Person(String name, String lastName, String dateOfBirth, String nationality,String education, String englishCertification, String phoneNumber, String email) {
-        try { 
+    public Person(String name, String lastName, String dateOfBirth, String nationality,String education, String englishCertification, String phoneNumber, String email) throws IllegalArgumentException{
         	setName(name);
 	        setLastName(lastName);
 	        setDateOfBirth(dateOfBirth);
@@ -29,9 +31,6 @@ public class Person {
 	        setEnglishCertification(englishCertification);
 	        setPhoneNumber(phoneNumber);
 	        setEmail(email);
-        }catch(IllegalArgumentException e){
-	    	System.out.println(e.getMessage());
-	    }
     }
 
     public String getName() {
@@ -39,7 +38,10 @@ public class Person {
     }
 
     public void setName(String name) {
-        this.name = name;
+    	if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+    	this.name = name;
     }
 
     public String getLastName() {
@@ -47,43 +49,25 @@ public class Person {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+    	if (lastName == null || lastName.trim().isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+    	this.lastName = lastName;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) throws IllegalArgumentException {
-        String[] dateParts = dateOfBirth.split("/");
-        if (dateParts.length == 3) {
-            int day = Integer.parseInt(dateParts[0]);
-            int month = Integer.parseInt(dateParts[1]);
-            int year = Integer.parseInt(dateParts[2]);
-
-            if (month < 1 || month > 12){
-                throw new IllegalArgumentException("Invalid month in date of birth");
-            } else {
-            	if(year < 1 || year > LocalDate.now().getYear()) {
-            		throw new IllegalArgumentException("Invalid year in date of birth");
-            	}
-            	else if(day < 1) {
-            		throw new IllegalArgumentException("Invalid day in date of birth");	
-            	}else if(month == 2 && day > 28 && year%4 != 0) {
-            		throw new IllegalArgumentException("Invalid day in date of birth");            		
-            	}else if(month == 2 && day > 29 && year%4 == 0) {
-            		throw new IllegalArgumentException("Invalid day in date of birth");            		
-            	}else if((month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12) && day>31) {
-            		throw new IllegalArgumentException("Invalid day in date of birth");            		
-            	}else if((month==4 || month==6 || month==9 || month==11) && day>30) {
-            		throw new IllegalArgumentException("Invalid day in date of birth");            		
-            	}else {
-            		this.dateOfBirth = dateOfBirth;
-            	}
-            }
-        } else {
-            throw new IllegalArgumentException("Invalid date format for date of birth");
-        }
+    public void setDateOfBirth(String dateOfBirth) throws IllegalArgumentException {        
+    	 try {
+    		 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	         sdf.setLenient(false);  
+	         this.dateOfBirth= sdf.parse(dateOfBirth);
+		}
+		catch(ParseException e){
+			throw new IllegalArgumentException();
+		}
     }
 
     public String getNationality() {
@@ -91,6 +75,9 @@ public class Person {
     }
 
     public void setNationality(String nationality) {
+    	if (nationality == null || nationality.trim().isEmpty()) {
+            throw new IllegalArgumentException();
+        }
         this.nationality = nationality;
     }
 
@@ -99,6 +86,9 @@ public class Person {
     }
 
     public void setEducation(String education) {
+    	if (education == null || education.trim().isEmpty()) {
+            throw new IllegalArgumentException();
+        }
         this.education = education;
     }
 
@@ -107,6 +97,9 @@ public class Person {
     }
 
     public void setEnglishCertification(String englishCertification) {
+    	if (englishCertification == null || englishCertification.trim().isEmpty()) {
+            throw new IllegalArgumentException();
+        }
         this.englishCertification = englishCertification;
     }
 
@@ -127,12 +120,15 @@ public class Person {
     }
 
     public void setEmail(String email) {
+    	if (email == null || email.trim().isEmpty()) {
+            throw new IllegalArgumentException();
+        }
         this.email = email;
     }
 
     public boolean isLegalAge() {
         int currentYear = LocalDate.now().getYear();
-        int birthYear = Integer.parseInt(this.dateOfBirth.split("/")[2]);
+        int birthYear = this.dateOfBirth.getYear();
         return currentYear - birthYear >= 18;
     }
 
