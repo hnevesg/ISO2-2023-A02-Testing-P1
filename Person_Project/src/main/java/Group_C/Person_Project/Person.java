@@ -3,6 +3,7 @@ package Group_C.Person_Project;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Person {
@@ -55,8 +56,8 @@ public class Person {
     	this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    public String getDateOfBirth() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(this.dateOfBirth);
     }
 
     public void setDateOfBirth(String dateOfBirth) throws IllegalArgumentException {        
@@ -127,9 +128,11 @@ public class Person {
     }
 
     public boolean isLegalAge() {
+    	Calendar calendar = Calendar.getInstance();
         int currentYear = LocalDate.now().getYear();
-        int birthYear = this.dateOfBirth.getYear();
-        return currentYear - birthYear >= 18;
+        calendar.setTime(this.dateOfBirth);
+        int birthYear = calendar.get(Calendar.YEAR);
+        return (currentYear - birthYear) >= 18;
     }
 
     public boolean isEuropean() {
