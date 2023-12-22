@@ -1,2 +1,5 @@
-Group_C\Person_Project\AppTest.class
-Group_C\Person_Project\TestPerson.class
+Group_C\Person_Project\TestPersonDC.class
+Group_C\Person_Project\TestPersonEachUse.class
+Group_C\Person_Project\TestPersonMCDC.class
+Group_C\Person_Project\TestPresentation$1.class
+Group_C\Person_Project\TestPresentation.class
